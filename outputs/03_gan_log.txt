@@ -1,0 +1,112 @@
+原始訓練集各類數量： [3596, 393, 3688, 6494, 4347, 2854, 4469]
+step 200/8000  D=1.354  G=1.061  (46s)
+step 400/8000  D=1.257  G=1.077  (90s)
+step 600/8000  D=1.341  G=1.161  (135s)
+step 800/8000  D=1.279  G=0.959  (179s)
+step 1000/8000  D=1.110  G=1.138  (223s)
+step 1200/8000  D=1.330  G=0.996  (268s)
+step 1400/8000  D=1.265  G=0.937  (312s)
+step 1600/8000  D=1.230  G=0.889  (357s)
+step 1800/8000  D=1.288  G=1.005  (402s)
+step 2000/8000  D=1.253  G=0.904  (447s)
+step 2200/8000  D=1.223  G=1.049  (492s)
+step 2400/8000  D=1.368  G=1.311  (537s)
+step 2600/8000  D=1.224  G=1.069  (582s)
+step 2800/8000  D=1.191  G=0.983  (627s)
+step 3000/8000  D=1.296  G=1.030  (672s)
+step 3200/8000  D=1.203  G=1.158  (716s)
+step 3400/8000  D=1.142  G=1.187  (761s)
+step 3600/8000  D=1.218  G=1.068  (806s)
+step 3800/8000  D=1.167  G=1.192  (851s)
+step 4000/8000  D=1.208  G=0.946  (895s)
+step 4200/8000  D=1.257  G=1.015  (940s)
+step 4400/8000  D=1.253  G=0.948  (984s)
+step 4600/8000  D=1.221  G=1.084  (1029s)
+step 4800/8000  D=1.194  G=1.175  (1073s)
+step 5000/8000  D=1.201  G=1.141  (1118s)
+step 5200/8000  D=1.402  G=0.980  (1162s)
+step 5400/8000  D=1.310  G=1.095  (1206s)
+step 5600/8000  D=1.203  G=1.117  (1250s)
+step 5800/8000  D=1.202  G=1.110  (1295s)
+step 6000/8000  D=1.387  G=1.106  (1339s)
+step 6200/8000  D=1.264  G=1.182  (1391s)
+step 6400/8000  D=1.218  G=0.911  (1440s)
+step 6600/8000  D=1.254  G=1.127  (1488s)
+step 6800/8000  D=1.247  G=1.025  (1535s)
+step 7000/8000  D=1.212  G=0.988  (1582s)
+step 7200/8000  D=1.203  G=0.992  (1633s)
+step 7400/8000  D=1.248  G=1.040  (1682s)
+step 7600/8000  D=1.310  G=1.032  (1729s)
+step 7800/8000  D=1.252  G=0.922  (1776s)
+step 8000/8000  D=1.263  G=1.121  (1823s)
+真圖 + GAN 假圖 各類數量： [6494, 6494, 6494, 6494, 6494, 6494, 6494]
+Epoch 1/30
+356/356 - 102s - 286ms/step - accuracy: 0.1790 - loss: 1.9704 - val_accuracy: 0.1628 - val_loss: 1.9600 - learning_rate: 0.0010
+Epoch 2/30
+356/356 - 101s - 284ms/step - accuracy: 0.2689 - loss: 1.7962 - val_accuracy: 0.3546 - val_loss: 1.6609 - learning_rate: 0.0010
+Epoch 3/30
+356/356 - 101s - 284ms/step - accuracy: 0.3314 - loss: 1.6535 - val_accuracy: 0.3640 - val_loss: 1.5642 - learning_rate: 0.0010
+Epoch 4/30
+356/356 - 102s - 286ms/step - accuracy: 0.3606 - loss: 1.5793 - val_accuracy: 0.4428 - val_loss: 1.4131 - learning_rate: 0.0010
+Epoch 5/30
+356/356 - 202s - 568ms/step - accuracy: 0.3824 - loss: 1.5344 - val_accuracy: 0.4139 - val_loss: 1.4450 - learning_rate: 0.0010
+Epoch 6/30
+356/356 - 513s - 1s/step - accuracy: 0.4186 - loss: 1.4774 - val_accuracy: 0.3699 - val_loss: 1.5516 - learning_rate: 0.0010
+Epoch 7/30
+356/356 - 934s - 3s/step - accuracy: 0.4316 - loss: 1.4430 - val_accuracy: 0.4540 - val_loss: 1.3534 - learning_rate: 0.0010
+Epoch 8/30
+356/356 - 67s - 189ms/step - accuracy: 0.4500 - loss: 1.4025 - val_accuracy: 0.4693 - val_loss: 1.3462 - learning_rate: 0.0010
+Epoch 9/30
+356/356 - 70s - 198ms/step - accuracy: 0.4795 - loss: 1.3459 - val_accuracy: 0.4181 - val_loss: 1.4418 - learning_rate: 0.0010
+Epoch 10/30
+356/356 - 72s - 204ms/step - accuracy: 0.5019 - loss: 1.2949 - val_accuracy: 0.4745 - val_loss: 1.3182 - learning_rate: 0.0010
+Epoch 11/30
+356/356 - 80s - 226ms/step - accuracy: 0.5151 - loss: 1.2572 - val_accuracy: 0.4930 - val_loss: 1.3178 - learning_rate: 0.0010
+Epoch 12/30
+356/356 - 83s - 232ms/step - accuracy: 0.5261 - loss: 1.2378 - val_accuracy: 0.4958 - val_loss: 1.3327 - learning_rate: 0.0010
+Epoch 13/30
+356/356 - 84s - 236ms/step - accuracy: 0.5303 - loss: 1.2124 - val_accuracy: 0.4861 - val_loss: 1.3067 - learning_rate: 0.0010
+Epoch 14/30
+356/356 - 89s - 249ms/step - accuracy: 0.5374 - loss: 1.1907 - val_accuracy: 0.5073 - val_loss: 1.2770 - learning_rate: 0.0010
+Epoch 15/30
+356/356 - 89s - 250ms/step - accuracy: 0.5540 - loss: 1.1429 - val_accuracy: 0.5199 - val_loss: 1.2494 - learning_rate: 0.0010
+Epoch 16/30
+356/356 - 95s - 266ms/step - accuracy: 0.5627 - loss: 1.1159 - val_accuracy: 0.5174 - val_loss: 1.2430 - learning_rate: 0.0010
+Epoch 17/30
+356/356 - 96s - 269ms/step - accuracy: 0.5700 - loss: 1.1004 - val_accuracy: 0.4990 - val_loss: 1.3142 - learning_rate: 0.0010
+Epoch 18/30
+356/356 - 97s - 272ms/step - accuracy: 0.5738 - loss: 1.0895 - val_accuracy: 0.5157 - val_loss: 1.2915 - learning_rate: 0.0010
+Epoch 19/30
+356/356 - 95s - 267ms/step - accuracy: 0.5821 - loss: 1.0640 - val_accuracy: 0.5275 - val_loss: 1.2501 - learning_rate: 0.0010
+Epoch 20/30
+356/356 - 95s - 267ms/step - accuracy: 0.5849 - loss: 1.0544 - val_accuracy: 0.5432 - val_loss: 1.2218 - learning_rate: 0.0010
+Epoch 21/30
+356/356 - 96s - 270ms/step - accuracy: 0.5969 - loss: 1.0233 - val_accuracy: 0.5377 - val_loss: 1.2558 - learning_rate: 0.0010
+Epoch 22/30
+356/356 - 100s - 282ms/step - accuracy: 0.6085 - loss: 0.9926 - val_accuracy: 0.5506 - val_loss: 1.2210 - learning_rate: 0.0010
+Epoch 23/30
+356/356 - 99s - 277ms/step - accuracy: 0.6175 - loss: 0.9758 - val_accuracy: 0.5481 - val_loss: 1.2353 - learning_rate: 0.0010
+Epoch 24/30
+356/356 - 95s - 266ms/step - accuracy: 0.6266 - loss: 0.9565 - val_accuracy: 0.5513 - val_loss: 1.2041 - learning_rate: 0.0010
+Epoch 25/30
+356/356 - 95s - 267ms/step - accuracy: 0.6367 - loss: 0.9298 - val_accuracy: 0.5202 - val_loss: 1.3190 - learning_rate: 0.0010
+Epoch 26/30
+356/356 - 94s - 265ms/step - accuracy: 0.6408 - loss: 0.9227 - val_accuracy: 0.5649 - val_loss: 1.2080 - learning_rate: 0.0010
+Epoch 27/30
+356/356 - 99s - 279ms/step - accuracy: 0.6511 - loss: 0.9000 - val_accuracy: 0.5575 - val_loss: 1.2479 - learning_rate: 0.0010
+Epoch 28/30
+356/356 - 100s - 280ms/step - accuracy: 0.6579 - loss: 0.8772 - val_accuracy: 0.5464 - val_loss: 1.2611 - learning_rate: 0.0010
+Epoch 29/30
+356/356 - 102s - 288ms/step - accuracy: 0.6757 - loss: 0.8308 - val_accuracy: 0.5809 - val_loss: 1.2634 - learning_rate: 5.0000e-04
+Epoch 30/30
+356/356 - 99s - 277ms/step - accuracy: 0.6840 - loss: 0.8077 - val_accuracy: 0.5788 - val_loss: 1.1945 - learning_rate: 5.0000e-04
+WARNING:absl:You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+
+[03_gan] test acc = 0.5901   macro-F1 = 0.5713
+  angry     P=0.549 R=0.399 F1=0.462
+  disgust   P=0.732 R=0.468 F1=0.571
+  fear      P=0.396 R=0.330 F1=0.360
+  happy     P=0.850 R=0.818 F1=0.834
+  sad       P=0.394 R=0.567 F1=0.465
+  surprise  P=0.754 R=0.762 F1=0.758
+  neutral   P=0.554 R=0.545 F1=0.550

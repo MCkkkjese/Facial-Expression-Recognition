@@ -1,0 +1,6 @@
+# Python 3.13.7（macOS, Apple M4, 只用 CPU 訓練）
+tensorflow==2.21.0
+keras==3.15.1
+numpy==2.5.4
+pillow==13.0.0
+matplotlib==3.11.2

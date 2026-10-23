@@ -1,0 +1,72 @@
+增強前各類數量： [3596, 393, 3688, 6494, 4347, 2854, 4469]
+增強後各類數量： [6494, 6494, 6494, 6494, 6494, 6494, 6494]
+Epoch 1/30
+356/356 - 71s - 200ms/step - accuracy: 0.1881 - loss: 1.9724 - val_accuracy: 0.0150 - val_loss: 2.8783 - learning_rate: 0.0010
+Epoch 2/30
+356/356 - 73s - 206ms/step - accuracy: 0.2698 - loss: 1.7838 - val_accuracy: 0.3271 - val_loss: 1.7160 - learning_rate: 0.0010
+Epoch 3/30
+356/356 - 75s - 210ms/step - accuracy: 0.3011 - loss: 1.7106 - val_accuracy: 0.3040 - val_loss: 1.7945 - learning_rate: 0.0010
+Epoch 4/30
+356/356 - 80s - 225ms/step - accuracy: 0.3289 - loss: 1.6486 - val_accuracy: 0.3930 - val_loss: 1.5637 - learning_rate: 0.0010
+Epoch 5/30
+356/356 - 81s - 227ms/step - accuracy: 0.3530 - loss: 1.6012 - val_accuracy: 0.3689 - val_loss: 1.5653 - learning_rate: 0.0010
+Epoch 6/30
+356/356 - 84s - 236ms/step - accuracy: 0.3770 - loss: 1.5575 - val_accuracy: 0.3577 - val_loss: 1.6547 - learning_rate: 0.0010
+Epoch 7/30
+356/356 - 84s - 237ms/step - accuracy: 0.4031 - loss: 1.4965 - val_accuracy: 0.4296 - val_loss: 1.4567 - learning_rate: 0.0010
+Epoch 8/30
+356/356 - 86s - 243ms/step - accuracy: 0.4339 - loss: 1.4567 - val_accuracy: 0.3902 - val_loss: 1.6348 - learning_rate: 0.0010
+Epoch 9/30
+356/356 - 87s - 246ms/step - accuracy: 0.4559 - loss: 1.4075 - val_accuracy: 0.4411 - val_loss: 1.4886 - learning_rate: 0.0010
+Epoch 10/30
+356/356 - 87s - 244ms/step - accuracy: 0.4702 - loss: 1.3731 - val_accuracy: 0.5021 - val_loss: 1.2797 - learning_rate: 0.0010
+Epoch 11/30
+356/356 - 88s - 246ms/step - accuracy: 0.4808 - loss: 1.3432 - val_accuracy: 0.5303 - val_loss: 1.2394 - learning_rate: 0.0010
+Epoch 12/30
+356/356 - 87s - 246ms/step - accuracy: 0.4946 - loss: 1.3118 - val_accuracy: 0.5160 - val_loss: 1.2580 - learning_rate: 0.0010
+Epoch 13/30
+356/356 - 87s - 246ms/step - accuracy: 0.5052 - loss: 1.2897 - val_accuracy: 0.5338 - val_loss: 1.2229 - learning_rate: 0.0010
+Epoch 14/30
+356/356 - 89s - 249ms/step - accuracy: 0.5074 - loss: 1.2678 - val_accuracy: 0.5063 - val_loss: 1.2663 - learning_rate: 0.0010
+Epoch 15/30
+356/356 - 89s - 249ms/step - accuracy: 0.5167 - loss: 1.2433 - val_accuracy: 0.5195 - val_loss: 1.2740 - learning_rate: 0.0010
+Epoch 16/30
+356/356 - 91s - 255ms/step - accuracy: 0.5285 - loss: 1.2183 - val_accuracy: 0.4941 - val_loss: 1.2954 - learning_rate: 0.0010
+Epoch 17/30
+356/356 - 91s - 256ms/step - accuracy: 0.5404 - loss: 1.1961 - val_accuracy: 0.5596 - val_loss: 1.1998 - learning_rate: 0.0010
+Epoch 18/30
+356/356 - 91s - 256ms/step - accuracy: 0.5465 - loss: 1.1773 - val_accuracy: 0.5394 - val_loss: 1.2008 - learning_rate: 0.0010
+Epoch 19/30
+356/356 - 91s - 257ms/step - accuracy: 0.5648 - loss: 1.1430 - val_accuracy: 0.5230 - val_loss: 1.2592 - learning_rate: 0.0010
+Epoch 20/30
+356/356 - 92s - 258ms/step - accuracy: 0.5711 - loss: 1.1209 - val_accuracy: 0.5666 - val_loss: 1.1728 - learning_rate: 0.0010
+Epoch 21/30
+356/356 - 92s - 258ms/step - accuracy: 0.5835 - loss: 1.0954 - val_accuracy: 0.5593 - val_loss: 1.1748 - learning_rate: 0.0010
+Epoch 22/30
+356/356 - 90s - 253ms/step - accuracy: 0.5887 - loss: 1.0792 - val_accuracy: 0.5711 - val_loss: 1.1399 - learning_rate: 0.0010
+Epoch 23/30
+356/356 - 88s - 246ms/step - accuracy: 0.5968 - loss: 1.0566 - val_accuracy: 0.5795 - val_loss: 1.1343 - learning_rate: 0.0010
+Epoch 24/30
+356/356 - 88s - 247ms/step - accuracy: 0.6045 - loss: 1.0335 - val_accuracy: 0.5948 - val_loss: 1.1396 - learning_rate: 0.0010
+Epoch 25/30
+356/356 - 88s - 247ms/step - accuracy: 0.6182 - loss: 0.9979 - val_accuracy: 0.5938 - val_loss: 1.1242 - learning_rate: 0.0010
+Epoch 26/30
+356/356 - 89s - 250ms/step - accuracy: 0.6279 - loss: 0.9762 - val_accuracy: 0.5861 - val_loss: 1.1621 - learning_rate: 0.0010
+Epoch 27/30
+356/356 - 89s - 250ms/step - accuracy: 0.6387 - loss: 0.9522 - val_accuracy: 0.5760 - val_loss: 1.1834 - learning_rate: 0.0010
+Epoch 28/30
+356/356 - 90s - 252ms/step - accuracy: 0.6473 - loss: 0.9356 - val_accuracy: 0.5966 - val_loss: 1.1576 - learning_rate: 0.0010
+Epoch 29/30
+356/356 - 91s - 254ms/step - accuracy: 0.6527 - loss: 0.9164 - val_accuracy: 0.5669 - val_loss: 1.2699 - learning_rate: 0.0010
+Epoch 30/30
+356/356 - 90s - 253ms/step - accuracy: 0.6766 - loss: 0.8513 - val_accuracy: 0.5893 - val_loss: 1.2177 - learning_rate: 5.0000e-04
+WARNING:absl:You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+
+[02_augmentation] test acc = 0.6080   macro-F1 = 0.5806
+  angry     P=0.629 R=0.408 F1=0.495
+  disgust   P=0.626 R=0.559 F1=0.590
+  fear      P=0.468 R=0.264 F1=0.337
+  happy     P=0.831 R=0.839 F1=0.835
+  sad       P=0.432 R=0.556 F1=0.486
+  surprise  P=0.693 R=0.827 F1=0.754
+  neutral   P=0.518 R=0.627 F1=0.567

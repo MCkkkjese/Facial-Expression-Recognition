@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FER2013 情緒分類 Demo</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --text:#1c2128; --muted:#667085; --line:#e4e7ec; --accent:#3b6cf6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#12151a; --card:#1b1f27; --text:#e8eaed; --muted:#9aa3b0; --line:#2b313b; --accent:#7b9bff; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 -apple-system,"PingFang TC","Noto Sans TC",sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:1.6rem; margin:0 0 4px; }
+  h2 { font-size:1.2rem; margin:0 0 12px; }
+  p.sub { color:var(--muted); margin:0 0 24px; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:20px; }
+  .row { display:flex; gap:20px; flex-wrap:wrap; }
+  .col { flex:1 1 300px; min-width:0; }
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .tabs button, .btn { border:1px solid var(--line); background:var(--bg); color:var(--text); padding:8px 14px; border-radius:8px; cursor:pointer; font:inherit; }
+  .tabs button.on { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn:hover { border-color:var(--accent); }
+  canvas#view { width:100%; max-width:320px; aspect-ratio:1; background:#000; border-radius:8px; image-rendering:pixelated; display:block; }
+  video { display:none; }
+  .bars { display:grid; gap:6px; }
+  .bar { display:grid; grid-template-columns:80px 1fr 52px; align-items:center; gap:8px; font-size:.9rem; }
+  .bar .track { background:var(--line); border-radius:4px; height:14px; overflow:hidden; }
+  .bar .fill { height:100%; background:var(--accent); width:0; transition:width .15s; }
+  .bar.top .fill { background:#16a34a; }
+  .bar.top span:first-child { font-weight:700; }
+  #verdict { font-size:1.4rem; font-weight:700; margin:0 0 10px; min-height:2rem; }
+  .thumbs { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+  .thumbs img { width:48px; height:48px; border-radius:4px; cursor:pointer; image-rendering:pixelated; border:2px solid transparent; }
+  .thumbs img:hover { border-color:var(--accent); }
+  table { width:100%; border-collapse:collapse; font-size:.9rem; }
+  th, td { padding:6px 8px; text-align:right; border-bottom:1px solid var(--line); }
+  th:first-child, td:first-child { text-align:left; }
+  img.fig { width:100%; border-radius:8px; border:1px solid var(--line); background:#fff; }
+  .note { color:var(--muted); font-size:.85rem; }
+  .figs { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  .good { color:#16a34a; font-weight:600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>FER2013 情緒分類 Demo</h1>
+  <p class="sub">比較「原始資料／影像增強／GAN 補資料」三種訓練方式。模型在你的瀏覽器裡執行（TensorFlow.js），圖片不會上傳到任何地方。</p>
+
+  <section>
+    <h2>即時辨識</h2>
+    <div class="tabs" id="modelTabs"></div>
+    <div class="row">
+      <div class="col">
+        <canvas id="view" width="48" height="48"></canvas>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <label class="btn">上傳圖片<input id="file" type="file" accept="image/*" hidden></label>
+          <button class="btn" id="camBtn">開啟攝影機</button>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+        <p class="note">縮成 48×48 灰階後送入模型（取中央正方形）。請盡量使用已裁切好的正面臉部；上方是測試集範例，點一下即可辨識。</p>
+      </div>
+      <div class="col">
+        <div id="verdict">載入模型中…</div>
+        <div class="bars" id="bars"></div>
+        <p class="note" id="allModels"></p>
+      </div>
+    </div>
+    <video id="video" playsinline muted></video>
+  </section>
+
+  <section>
+    <h2>測試集結果</h2>
+    <table id="resTable"></table>
+    <p class="note">disgust 類別只有 393 張訓練圖，原始資料訓練完全認不出來（F1 = 0）；補資料後 F1 大幅提升。</p>
+  </section>
+
+  <section>
+    <h2>圖表</h2>
+    <div class="figs" id="figs"></div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.22.0/tf.min.js"></script>
+<script>
+const CLASSES = ["angry","disgust","fear","happy","sad","surprise","neutral"];
+const ZH = {angry:"生氣", disgust:"厭惡", fear:"恐懼", happy:"開心", sad:"難過", surprise:"驚訝", neutral:"中性"};
+const LABEL = {"01_baseline":"1 原始資料", "02_augmentation":"2 影像增強", "03_gan":"3 GAN"};
+const $ = id => document.getElementById(id);
+const models = {};
+let current = null, source = null, camStream = null, raf = 0;
+
+// 與 common.py 的 build_classifier 相同；BatchNorm 已在 export_web.py 合併進卷積
+function buildModel(tensors) {
+  const m = tf.sequential();
+  let t = 0, first = true;
+  for (const n of [1, 1, 2, 2]) {
+    for (let i = 0; i < n; i++) {
+      const cfg = { filters: tensors[t].shape[3], kernelSize: 3, padding: "same", activation: "relu" };
+      if (first) { cfg.inputShape = [48, 48, 1]; first = false; }
+      const l = tf.layers.conv2d(cfg); m.add(l); l.setWeights([tensors[t], tensors[t+1]]); t += 2;
+    }
+    m.add(tf.layers.maxPooling2d({ poolSize: 2 }));
+  }
+  m.add(tf.layers.flatten());
+  for (const act of ["relu", "softmax"]) {
+    const l = tf.layers.dense({ units: tensors[t+1].shape[0], activation: act });
+    m.add(l); l.setWeights([tensors[t], tensors[t+1]]); t += 2;
+  }
+  return m;
+}
+
+async function loadModel(name, shapes) {
+  const buf = await (await fetch(`models/${name}.bin`)).arrayBuffer();
+  const all = new Float32Array(buf);
+  let off = 0;
+  const tensors = shapes.map(s => {
+    const n = s.reduce((a, b) => a * b, 1);
+    const t = tf.tensor(all.subarray(off, off + n), s); off += n; return t;
+  });
+  return buildModel(tensors);
+}
+
+function drawSource() {
+  const ctx = $("view").getContext("2d", { willReadFrequently: true });
+  const w = source.videoWidth || source.naturalWidth || source.width;
+  const h = source.videoHeight || source.naturalHeight || source.height;
+  if (!w || !h) return null;
+  const s = Math.min(w, h);
+  ctx.drawImage(source, (w - s) / 2, (h - s) / 2, s, s, 0, 0, 48, 48);
+  return ctx.getImageData(0, 0, 48, 48);
+}
+
+function predictAll() {
+  const img = drawSource();
+  if (!img) return;
+  const gray = new Float32Array(48 * 48);
+  for (let i = 0; i < gray.length; i++) {
+    const r = img.data[i*4], g = img.data[i*4+1], b = img.data[i*4+2];
+    gray[i] = (0.299*r + 0.587*g + 0.114*b) / 255;
+    img.data[i*4] = img.data[i*4+1] = img.data[i*4+2] = gray[i] * 255;   // 畫面顯示灰階
+  }
+  $("view").getContext("2d").putImageData(img, 0, 0);
+  const preds = {};
+  tf.tidy(() => {
+    const x = tf.tensor4d(gray, [1, 48, 48, 1]);
+    for (const n in models) preds[n] = models[n].predict(x).dataSync().slice();
+  });
+  render(preds);
+}
+
+function render(preds) {
+  const p = preds[current];
+  const top = p.indexOf(Math.max(...p));
+  $("verdict").textContent = `${ZH[CLASSES[top]]}（${CLASSES[top]}）${(p[top]*100).toFixed(1)}%`;
+  $("bars").innerHTML = CLASSES.map((c, i) =>
+    `<div class="bar ${i === top ? "top" : ""}"><span>${ZH[c]}</span>` +
+    `<div class="track"><div class="fill" style="width:${p[i]*100}%"></div></div>` +
+    `<span>${(p[i]*100).toFixed(1)}%</span></div>`).join("");
+  $("allModels").innerHTML = "三個模型的判斷：" + Object.keys(preds).map(n => {
+    const q = preds[n]; return `${LABEL[n]}→${ZH[CLASSES[q.indexOf(Math.max(...q))]]}`;
+  }).join("　");
+}
+
+function loop() { predictAll(); raf = requestAnimationFrame(() => setTimeout(loop, 150)); }
+function stopCam() {
+  cancelAnimationFrame(raf);
+  if (camStream) camStream.getTracks().forEach(t => t.stop());
+  camStream = null; $("camBtn").textContent = "開啟攝影機";
+}
+function useImage(src) {
+  stopCam();
+  const im = new Image();
+  im.onload = () => { source = im; predictAll(); };
+  im.src = src;
+}
+
+$("file").onchange = e => { const f = e.target.files[0]; if (f) useImage(URL.createObjectURL(f)); };
+$("camBtn").onclick = async () => {
+  if (camStream) return stopCam();
+  try {
+    camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+    const v = $("video"); v.srcObject = camStream; await v.play();
+    source = v; $("camBtn").textContent = "關閉攝影機"; loop();
+  } catch (err) { alert("無法開啟攝影機：" + err.message); }
+};
+
+async function init() {
+  const manifest = await (await fetch("models/manifest.json")).json();
+  for (const n of manifest.models) models[n] = await loadModel(n, manifest.shapes);
+  current = manifest.models[2];
+  $("modelTabs").innerHTML = manifest.models.map(n =>
+    `<button data-m="${n}" class="${n === current ? "on" : ""}">${LABEL[n]}</button>`).join("");
+  $("modelTabs").onclick = e => {
+    const m = e.target.dataset.m; if (!m) return;
+    current = m;
+    document.querySelectorAll("#modelTabs button").forEach(b => b.classList.toggle("on", b.dataset.m === m));
+    if (source) predictAll();
+  };
+  $("thumbs").innerHTML = CLASSES.flatMap(c => [0, 1, 2].map(i =>
+    `<img src="samples/${c}_${i}.jpg" title="${c}" alt="${c}">`)).join("");
+  $("thumbs").onclick = e => { if (e.target.tagName === "IMG") useImage(e.target.src); };
+  useImage("samples/happy_0.jpg");
+
+  const res = await (await fetch("results.json")).json();
+  const names = manifest.models;
+  const best = k => Math.max(...names.map(n => k(res[n])));
+  const cell = (v, b, f) => `<td class="${v === b ? "good" : ""}">${f(v)}</td>`;
+  const pct = v => (v * 100).toFixed(1) + "%", f2 = v => v.toFixed(3);
+  const rows = [
+    ["準確率", r => r.test_accuracy, pct], ["macro-F1", r => r.macro_f1, f2],
+    ...CLASSES.map(c => [`${ZH[c]} F1`, r => r.per_class[c].f1, f2]),
+  ];
+  $("resTable").innerHTML = `<tr><th></th>${names.map(n => `<th>${LABEL[n]}</th>`).join("")}</tr>` +
+    rows.map(([t, k, f]) => `<tr><td>${t}</td>${names.map(n => cell(k(res[n]), best(k), f)).join("")}</tr>`).join("");
+
+  const figs = [
+    ...names.map(n => [`${LABEL[n]}：訓練曲線`, `img/${n}_curves.png`]),
+    ...names.map(n => [`${LABEL[n]}：混淆矩陣`, `img/${n}_confusion.png`]),
+    ["影像增強範例", "img/02_augmentation_examples.png"],
+    ["GAN 生成的假臉", "img/03_gan_samples_step8000.png"],
+  ];
+  $("figs").innerHTML = figs.map(([t, s]) => `<figure style="margin:0"><img class="fig" src="${s}" alt="${t}" loading="lazy"><figcaption class="note">${t}</figcaption></figure>`).join("");
+}
+init().catch(e => { $("verdict").textContent = "載入失敗：" + e.message; });
+</script>
+</body>
+</html>
